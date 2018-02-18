@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shopping List</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    	.img{
+    		background-image: url("Immagini/cart.png");
+    	}
+	</style>
+</head>
+<body class="img">
+	<div class="row">
+		<div class="container">
+			<h3 style="text-align: center; color: red;">Shopping List</h3>
+			<div class="input-group">
+  				<div class="input-group-addon" id="basic-addon1">SHOPPING</div>
+  				<input type="text" class="form-control" placeholder="Select Item" aria-describedby="basic-addon1" id="Testo">
+  				<button type="button" class="btn btn-default btn-sm" id="Add">
+          			<span class="glyphicon glyphicon-plus"></span> Aggiungi
+        		</button>
+        		<button type="button" class="btn btn-default btn-sm" id="Clear">
+          			<span class="glyphicon glyphicon-trash"></span> Elimina 
+        		</button>
+  			</div>
+  			<div class="form-group">
+  				<label for="comment"></label>
+ 				 <textarea class="form-control" rows="10" id="area" style="background-color: #dddddd" disabled></textarea>
+			</div>
+		</div>
+	</div>
+
+	<script>
+    function ShoppingCart(area){
+      let l=[];
+      let count=0;
+      let update = function(){
+        let s='';
+        for(let e of l){
+          s += e.name;
+          if(e.quantity>1){
+            s+="("+e.quantity+")";
+          }
+          s+='\n';
+        }
+        area.innerHTML =s;
+      };
+      this.count=function(){
+        return count;
+      };
+      this.process=function(nome){
+        count++;
+        let special = nome.charAt(0);
+        if(special=='-'){
+          let str = nome.substring(1,nome.length);
+          for(let e of l){
+            if(e.name.toLowerCase()==str.toLowerCase()){
+              e.quantity--;
+              update();
+              return;
+            }
+          } 
+        }else{
+          for(let e of l){
+            if(e.name.toLowerCase()==nome.toLowerCase()){ //se l'oggetto è già presente, aggiorna la quantità
+              e.quantity++;
+              update();
+              return;
+            }
+            update();
+          }
+        }
+        l.push({  //mette in fondo a l
+          name:nome.toLowerCase(),
+          quantity:1
+        });
+        l.sort(function(a,b){
+          let nomeA = a.name.toLowerCase();
+          let nomeB = b.name.toLowerCase();
+          if(nomeA<nomeB){
+            return -1;
+          }
+          if(nomeA>nomeB){
+            return 1;
+          }else
+            return 0;
+        });
+      };
+      this.clear=function(){
+        l = [];
+        count=0;
+        update();
+      };
+    }
+    let carrello = new ShoppingCart(area);
+    Add.onclick = function(e){
+      carrello.process(Testo.value)
+    };
+    Clear.onclick= function(e){
+      carrello.clear();
+    };  
+    Testo.onkeydown = function(e){
+      if(e.keyCode==13){  
+        carrello.process(Testo.value);
+      }
+      if(e.keyCode==27){
+        Testo.value="";
+      }
+    };
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<html>
+<head>
+    <link rel="stylesheet" href="styleEs4.css">
+</head>
+<body>
+    <div class="main">
+        <h1 id="titolo"><span class="titolo">Shopping List </span><span id='nItems' class="nItems"></span></h1>
+        <div class="content">
+          <input type="text" id="t" class="input" placeholder="enter item here..."><button id="delete" class="redButton"><img src="https://icon-icons.com/icons2/936/PNG/512/trash_icon-icons.com_73364.png" width="20px"></button>
+              <button id="b" class="greenButton"><img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/checkmark-24-512.png" width="20px"></button>
+         <ul id="list">
+         </ul>
+     </div>
+    </div>
+    <script>
+        
+        window.onload=function() {
+            let l=[];
+            let button = document.getElementById("b");
+            let button2 = document.getElementById('delete');
+            let textfield=document.getElementById("t");
+            let lista=document.getElementById("list");
+            button.onclick=function(e) {
+                process();
+            }
+
+            button2.onclick = function(e) {
+                textfield.value = '';
+            }
+            textfield.onkeydown=function(e){
+                if(e.keyCode==13){
+                    process();
+                }
+            }
+            function aggiornaLista() {
+                lista.innerHTML='';
+                let counter = 0;
+                let itemCounter = 0;
+                for (let e of l) {
+                    let li=document.createElement('li');
+                    let span1 = document.createElement('span');
+                    span1.innerText='Prodotto: ' + e.name + ' ';
+                    span1.setAttribute('class','span1');
+                    li.appendChild(span1);
+                    let span2 = document.createElement('span');
+                    span2.innerText = 'Qt. ' + e.quant;
+                    span2.setAttribute('class','span2');
+                    li.appendChild(span2);
+                    let span3 = document.createElement('span');
+                    span3.setAttribute('class','span3');
+                    let b1 = document.createElement('button');
+                    b1.innerHTML = '+';
+                    b1.setAttribute('class','b1');
+                    let b2 = document.createElement('button');
+                    b2.innerHTML = '-';
+                    b2.setAttribute('class','b2');
+                    let b3 = document.createElement('button');
+                    b3.innerHTML = 'X';
+                    b3.setAttribute('class','b3');
+                    span3.appendChild(b1);
+                    span3.appendChild(b2);
+                    span3.appendChild(b3);
+                    li.appendChild(span3);
+                    lista.appendChild(li);
+                    b1.onclick = (function(){
+                        let i = counter;
+                        return function(){
+                            l[i].quant++;
+                            aggiornaLista();
+                        }
+                    })();
+                    b2.onclick = (function(){
+                        let i = counter;
+                        return function(){
+                            l[i].quant--;
+                            if(l[i].quant===0){
+                                l.splice(i,1);
+
+                            };
+                            aggiornaLista();
+                        }
+                    }) ();
+                    b3.onclick = (function(){
+                        let i = counter;
+                        return function(){
+                            l.splice(i,1);
+                            aggiornaLista();
+                        }
+                    }) ();
+                    itemCounter += e.quant;
+                    counter++;
+                }
+                 document.getElementById('nItems').innerHTML = itemCounter + ' items';
+            }
+            function process(){
+                let s=textfield.value;
+                for(let e of l){
+                    if(e.name.toLowerCase() == s.toLowerCase()){
+                        e.quant++;
+                        aggiornaLista();
+                        return;
+                    }
+                }
+               
+                 l.push({name:s, quant:1});
+                
+                 l.sort(function(a,b){
+                    let c = a.name.toLowerCase();
+                    let d = b.name.toLowerCase();
+                    if(c<d){
+                        return-1;
+                    }
+                    if(c>d) return 1;
+                    else return 0;
+                });
+                aggiornaLista();
+            }
+        }
+    
+    </script>
+</body>
+</html>
