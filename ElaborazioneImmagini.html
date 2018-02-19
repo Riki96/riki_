@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+		let img;
+		// let img1 = 1;
+		// function preload(){
+		// 	img1 = loadImage('Immagini/visa.jpg');
+		// }
+		function setup(){
+			createCanvas(600,400);
+			img = createImage(300,300);
+			img.loadPixels();
+			for(let x=0;x<img.width;x++){
+				for(let y=0;y<img.height;y++){
+					img.set(x,y,[0,153,190,map(x,0,height,0,255)]);
+				}
+			}
+			img.updatePixels();
+		}
+		
+		function draw(){
+			background(0);
+			tint(200,128);
+			image(img,50,50);
+			image(img,mouseX-img.width/2,mouseY - img.height/2);
+			// image(img1,100,400);
+		}
+	</script>
+
+
+</body>
+</html>

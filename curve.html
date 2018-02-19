@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
+</head>
+<style type="text/css">
+	.container{
+		position:relative;
+		left:850px;
+		top:100px;
+	}
+	.bottone{
+		position: relative;
+		left: 100px;
+		top: 5px;
+
+	}
+</style>
+<body>
+	<div class="container">
+	<div >
+		X1<input type="text" id="x1" value="100">
+		Y1<input type="text" id="y1" value="100">
+	</div>
+	<div >
+		X2<input type="text" id="x2" value="100">
+		Y2<input type="text" id="y2" value="500">
+	</div>
+	<div >
+		X3<input type="text" id="x3" value="500">
+		Y3<input type="text" id="y3" value="100">
+	</div>
+	<div >
+		X4<input type="text" id="x4" value="500">
+		Y4<input type="text" id="y4" value="500">
+	</div>
+	<div class="bottone">
+		<input type="button" value="Crea" id="button">
+	</div>
+</div>
+	<script type="text/javascript">
+		let xs = [];
+		let ys = [];
+		let x1,x2,x3,x4,y1,y3,y4,y2;
+		x1 = document.getElementById('x1');
+		y1 = document.getElementById('y1');
+		x2 = document.getElementById('x2');
+		y2 = document.getElementById('y2');
+		x3 = document.getElementById('x3');
+		y3 = document.getElementById('y3');
+		x4 = document.getElementById('x4');
+		y4 = document.getElementById('y4');
+		button.onclick = function(){
+				disegna(x1,x2,x3,x4,y1,y3,y4,y2);
+			};
+		function setup(){
+			createCanvas(800,600);
+		}
+		function disegna(x1,x2,x3,x4,y1,y3,y4,y2){
+			xs[0] = parseInt(x1.value);
+			ys[0] = parseInt(y1.value);
+			xs[1] = parseInt(x2.value);
+			ys[1] = parseInt(y2.value);
+			xs[2] = parseInt(x3.value);
+			ys[2] = parseInt(y3.value);
+			xs[3] = parseInt(x4.value);
+			ys[3] = parseInt(y4.value);
+		}
+		function draw(){
+			background(255,120,120);
+			fill(255,0,0);
+			stroke(0);
+			strokeWeight(1);
+			for(let i=0;i<4;i++){
+				ellipse(xs[i],ys[i],30,30);
+				if(mouseIsPressed){
+					if(sq(mouseX-xs[i])+sq(mouseY-ys[i])<sq(30)){
+						xs[i] = mouseX;
+						ys[i] = mouseY;
+						x1.value = xs[0];
+						x2.value = xs[1];
+						x3.value = xs[2];
+						x4.value = xs[3];
+						y1.value = ys[0];
+						y2.value = ys[1];
+						y3.value = ys[2];
+						y4.value = ys[3];
+					}
+				}
+			}
+			strokeWeight(5);
+			line(xs[0],ys[0],xs[1],ys[1]);
+			line(xs[2],ys[2],xs[3],ys[3]);
+			noFill();
+			strokeWeight(3);
+			stroke(0,0,255);
+			curve(xs[1],ys[1],xs[0],ys[0],xs[3],ys[3],xs[2],ys[2]);
+		// 	if(mouseIsPressed){
+		// 		for(let i=0;i<4;i++){
+		// 		if(sq(mouseX-xs[i])+sq(mouseY-ys[i])<sq(30)){
+		// 			xs[i] = mouseX;
+		// 			ys[i] = mouseY;
+		// 		}
+		// 	}
+		// }
+	}
+	</script>
+</body>
+</html>

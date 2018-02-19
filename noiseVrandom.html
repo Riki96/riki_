@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		/*RANDOM*/
+	/*	let vv = [];
+		function setup(){
+			createCanvas(800,600);
+		}
+		function draw(){
+			background(0);
+			stroke(255);
+			if(vv.length>width) vv.splice(0,1);
+			vv.push(random()*height);
+			beginShape();
+				vertex(0,height-1);
+				for(let v in vv){
+					vertex(v,vv[v]);
+				}
+				vertex(vv.length,height-1);
+			endShape();
+		}*/
+		/*NOISE*/
+		let vv = [];
+		function setup(){
+			createCanvas(800,600);
+		}
+		function draw(){
+			background(255,180,190);
+			// stroke(255,0,0);
+			fill(255,120,125);
+			if(vv.length>width) vv.splice(0,1);
+			
+			let frame = frameCount*0.0005;	
+			vv.push(noise(frame)*height);
+			beginShape();
+				vertex(0,height-1);
+				for(let v in vv){
+					stroke(255,0,0);
+					// strokeWeight(3);
+					vertex(v,vv[v]);
+				}
+				// stroke(255,0,0);
+				vertex(vv.length,height-1);
+			endShape();
+		}
+	</script>
+</body>
+</html>
